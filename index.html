@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#FFB6C1" />
+  <title>家計の黄金比シミュレーター｜みく｜元借金妻</title>
+  <meta name="description" content="手取りを入れるだけで、家計の黄金比に沿った理想の予算がわかるシミュレーター。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-deco">
+    <span class="deco deco-1">🌱</span>
+    <span class="deco deco-2">💰</span>
+    <span class="deco deco-3">🌷</span>
+    <span class="deco deco-4">✨</span>
+  </div>
+
+  <main class="container">
+    <header class="hero">
+      <p class="hero-eyebrow">みく｜元借金妻</p>
+      <h1 class="hero-title">家計の<span class="accent">黄金比</span>シミュレーター</h1>
+      <p class="hero-sub">手取りを入れるだけで、理想の予算がわかる🌱</p>
+    </header>
+
+    <section class="card form-card">
+      <label class="field-label" for="income">あなたの月の手取り</label>
+      <div class="input-wrap">
+        <input id="income" type="number" inputmode="numeric" placeholder="例：200000" min="0" step="1000" />
+        <span class="input-suffix">円</span>
+      </div>
+
+      <p class="field-label">世帯タイプ</p>
+      <div class="household-tabs" role="tablist">
+        <button class="tab" data-type="single" role="tab" aria-selected="false">単身</button>
+        <button class="tab active" data-type="couple" role="tab" aria-selected="true">夫婦のみ</button>
+        <button class="tab" data-type="family" role="tab" aria-selected="false">夫婦＋子供</button>
+      </div>
+
+      <button id="calcBtn" class="primary-btn">
+        計算する<span class="btn-emoji">🌱</span>
+      </button>
+    </section>
+
+    <section id="result" class="result hidden">
+      <h2 class="result-title">理想の予算がこちら<span>💖</span></h2>
+      <div class="chart-wrap">
+        <canvas id="chart" aria-label="家計の黄金比 円グラフ"></canvas>
+        <div class="chart-center">
+          <p class="chart-center-label">手取り</p>
+          <p class="chart-center-value" id="chartCenter">¥0</p>
+        </div>
+      </div>
+
+      <ul id="categoryList" class="category-list"></ul>
+
+      <div class="notice">
+        <p class="notice-title">⚠️ 注意</p>
+        <p>リールで紹介した黄金比は、あくまで私の家計の比率です。<br />細かく計算したい人は、このシミュレーションを目安に予算を立ててみてね🌱</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>※ このシミュレーターは、家計再生コンサルタント・横山光昭氏の家計再生メソッドをベースにした参考値です。<br />実際の比率は、世帯状況・地域・ライフステージに応じて調整してください。</p>
+      <p class="credit">created by <a href="https://www.instagram.com/miku_kakei_log/" target="_blank" rel="noopener">@miku_kakei_log</a></p>
+    </footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
