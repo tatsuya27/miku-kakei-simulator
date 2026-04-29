@@ -1,6 +1,7 @@
 /* ============================================
    家計の黄金比シミュレーター
    横山光昭式（家計再生メソッド）の参考値
+   ※「夫婦＋子供」は子供人数別に内訳を変動
 ============================================ */
 
 // 世帯タイプ別の黄金比（合計100%）
@@ -44,33 +45,74 @@ const RATIOS = {
     ],
   },
   family: {
-    label: '夫婦＋子供',
-    items: [
-      { name: '住居費',         pct: 25, color: '#FFB6C1' },
-      { name: '食費',           pct: 15, color: '#FFCBA4' },
-      { name: '水道光熱費',     pct: 6,  color: '#FFE5A5' },
-      { name: '通信費',         pct: 5,  color: '#D4E89E' },
-      { name: '小遣い',         pct: 8,  color: '#A4E5C5' },
-      { name: '教育費',         pct: 8,  color: '#A4D8E5' },
-      { name: '衣服美容費',     pct: 3,  color: '#B6BFE5' },
-      { name: '日用品費',       pct: 2,  color: '#D4B6E5' },
-      { name: '趣味娯楽費',     pct: 2,  color: '#E5B6D4' },
-      { name: '交際費',         pct: 2,  color: '#F0C9D9' },
-      { name: '医療費',         pct: 1,  color: '#E5D9B6' },
-      { name: '保険料',         pct: 6,  color: '#C9E5D9' },
-      { name: '嗜好品',         pct: 1,  color: '#D9D9D9' },
-      { name: '貯蓄',           pct: 16, color: '#FF8FA8' },
-    ],
+    1: {
+      label: '夫婦＋子1人',
+      items: [
+        { name: '住居費',       pct: 25, color: '#FFB6C1' },
+        { name: '食費',         pct: 15, color: '#FFCBA4' },
+        { name: '水道光熱費',   pct: 6,  color: '#FFE5A5' },
+        { name: '通信費',       pct: 5,  color: '#D4E89E' },
+        { name: '小遣い',       pct: 8,  color: '#A4E5C5' },
+        { name: '教育費',       pct: 8,  color: '#A4D8E5' },
+        { name: '衣服美容費',   pct: 3,  color: '#B6BFE5' },
+        { name: '日用品費',     pct: 2,  color: '#D4B6E5' },
+        { name: '趣味娯楽費',   pct: 2,  color: '#E5B6D4' },
+        { name: '交際費',       pct: 2,  color: '#F0C9D9' },
+        { name: '医療費',       pct: 1,  color: '#E5D9B6' },
+        { name: '保険料',       pct: 6,  color: '#C9E5D9' },
+        { name: '嗜好品',       pct: 1,  color: '#D9D9D9' },
+        { name: '貯蓄',         pct: 16, color: '#FF8FA8' },
+      ],
+    },
+    2: {
+      label: '夫婦＋子2人',
+      items: [
+        { name: '住居費',       pct: 25, color: '#FFB6C1' },
+        { name: '食費',         pct: 16, color: '#FFCBA4' },
+        { name: '水道光熱費',   pct: 7,  color: '#FFE5A5' },
+        { name: '通信費',       pct: 5,  color: '#D4E89E' },
+        { name: '小遣い',       pct: 6,  color: '#A4E5C5' },
+        { name: '教育費',       pct: 12, color: '#A4D8E5' },
+        { name: '衣服美容費',   pct: 3,  color: '#B6BFE5' },
+        { name: '日用品費',     pct: 3,  color: '#D4B6E5' },
+        { name: '趣味娯楽費',   pct: 2,  color: '#E5B6D4' },
+        { name: '交際費',       pct: 2,  color: '#F0C9D9' },
+        { name: '医療費',       pct: 1,  color: '#E5D9B6' },
+        { name: '保険料',       pct: 6,  color: '#C9E5D9' },
+        { name: '貯蓄',         pct: 12, color: '#FF8FA8' },
+      ],
+    },
+    3: {
+      label: '夫婦＋子3人以上',
+      items: [
+        { name: '住居費',       pct: 25, color: '#FFB6C1' },
+        { name: '食費',         pct: 18, color: '#FFCBA4' },
+        { name: '水道光熱費',   pct: 8,  color: '#FFE5A5' },
+        { name: '通信費',       pct: 5,  color: '#D4E89E' },
+        { name: '小遣い',       pct: 5,  color: '#A4E5C5' },
+        { name: '教育費',       pct: 15, color: '#A4D8E5' },
+        { name: '衣服美容費',   pct: 3,  color: '#B6BFE5' },
+        { name: '日用品費',     pct: 3,  color: '#D4B6E5' },
+        { name: '趣味娯楽費',   pct: 1,  color: '#E5B6D4' },
+        { name: '交際費',       pct: 1,  color: '#F0C9D9' },
+        { name: '医療費',       pct: 1,  color: '#E5D9B6' },
+        { name: '保険料',       pct: 6,  color: '#C9E5D9' },
+        { name: '貯蓄',         pct: 9,  color: '#FF8FA8' },
+      ],
+    },
   },
 };
 
 // 状態
 let currentType = 'couple';
+let currentChildren = '1';
 let chartInstance = null;
 
 // DOM
 const $income = document.getElementById('income');
 const $tabs = document.querySelectorAll('.tab');
+const $subTabs = document.querySelectorAll('.sub-tab');
+const $childrenWrap = document.getElementById('childrenWrap');
 const $calcBtn = document.getElementById('calcBtn');
 const $result = document.getElementById('result');
 const $list = document.getElementById('categoryList');
@@ -80,7 +122,15 @@ const $canvas = document.getElementById('chart');
 // 円フォーマット
 const fmt = (n) => '¥' + Math.round(n).toLocaleString('ja-JP');
 
-// タブ切替
+// 現在の比率データを取得
+function getRatioData() {
+  if (currentType === 'family') {
+    return RATIOS.family[currentChildren];
+  }
+  return RATIOS[currentType];
+}
+
+// 世帯タイプ切替
 $tabs.forEach((tab) => {
   tab.addEventListener('click', () => {
     $tabs.forEach((t) => {
@@ -90,6 +140,31 @@ $tabs.forEach((tab) => {
     tab.classList.add('active');
     tab.setAttribute('aria-selected', 'true');
     currentType = tab.dataset.type;
+
+    // 「夫婦＋子供」の場合のみ子供人数を表示
+    if (currentType === 'family') {
+      $childrenWrap.classList.remove('hidden');
+    } else {
+      $childrenWrap.classList.add('hidden');
+    }
+
+    if (!$result.classList.contains('hidden')) {
+      calculate();
+    }
+  });
+});
+
+// 子供人数切替
+$subTabs.forEach((tab) => {
+  tab.addEventListener('click', () => {
+    $subTabs.forEach((t) => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    currentChildren = tab.dataset.children;
+
     if (!$result.classList.contains('hidden')) {
       calculate();
     }
@@ -106,7 +181,6 @@ $calcBtn.addEventListener('click', () => {
     return;
   }
   calculate();
-  // 結果までスクロール
   setTimeout(() => {
     $result.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 200);
@@ -124,7 +198,7 @@ function calculate() {
   const income = parseInt($income.value, 10);
   if (!income || income <= 0) return;
 
-  const data = RATIOS[currentType];
+  const data = getRatioData();
   const items = data.items.map((item) => ({
     ...item,
     amount: income * (item.pct / 100),

@@ -213,6 +213,53 @@ body {
   box-shadow: 0 2px 8px rgba(255, 143, 168, 0.2);
 }
 
+/* 子供人数セレクター */
+.children-wrap {
+  margin-top: 18px;
+  animation: fade-in 0.3s ease-out;
+}
+
+.children-wrap.hidden {
+  display: none;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.children-tabs {
+  display: flex;
+  gap: 6px;
+  background: var(--pink-50);
+  padding: 5px;
+  border-radius: 12px;
+}
+
+.sub-tab {
+  flex: 1;
+  padding: 10px 6px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-light);
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sub-tab:hover {
+  color: var(--pink-700);
+}
+
+.sub-tab.active {
+  background: white;
+  color: var(--pink-700);
+  box-shadow: 0 2px 6px rgba(255, 143, 168, 0.18);
+}
+
 /* メインボタン */
 .primary-btn {
   display: flex;
