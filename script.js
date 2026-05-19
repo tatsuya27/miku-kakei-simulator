@@ -101,6 +101,64 @@ const RATIOS = {
       ],
     },
   },
+  // ひとり親＋子供（単一収入・養育費/児童扶養手当/児童手当は手取りに合算前提）
+  singleparent: {
+    1: {
+      label: 'ひとり親＋子1人',
+      items: [
+        { name: '住居費',       pct: 28, color: '#FFB6C1' },
+        { name: '食費',         pct: 16, color: '#FFCBA4' },
+        { name: '水道光熱費',   pct: 7,  color: '#FFE5A5' },
+        { name: '通信費',       pct: 5,  color: '#D4E89E' },
+        { name: '小遣い',       pct: 6,  color: '#A4E5C5' },
+        { name: '教育費',       pct: 9,  color: '#A4D8E5' },
+        { name: '衣服美容費',   pct: 3,  color: '#B6BFE5' },
+        { name: '日用品費',     pct: 3,  color: '#D4B6E5' },
+        { name: '趣味娯楽費',   pct: 2,  color: '#E5B6D4' },
+        { name: '交際費',       pct: 2,  color: '#F0C9D9' },
+        { name: '医療費',       pct: 1,  color: '#E5D9B6' },
+        { name: '保険料',       pct: 5,  color: '#C9E5D9' },
+        { name: '嗜好品',       pct: 1,  color: '#D9D9D9' },
+        { name: '貯蓄',         pct: 12, color: '#FF8FA8' },
+      ],
+    },
+    2: {
+      label: 'ひとり親＋子2人',
+      items: [
+        { name: '住居費',       pct: 27, color: '#FFB6C1' },
+        { name: '食費',         pct: 17, color: '#FFCBA4' },
+        { name: '水道光熱費',   pct: 8,  color: '#FFE5A5' },
+        { name: '通信費',       pct: 5,  color: '#D4E89E' },
+        { name: '小遣い',       pct: 5,  color: '#A4E5C5' },
+        { name: '教育費',       pct: 13, color: '#A4D8E5' },
+        { name: '衣服美容費',   pct: 3,  color: '#B6BFE5' },
+        { name: '日用品費',     pct: 3,  color: '#D4B6E5' },
+        { name: '趣味娯楽費',   pct: 2,  color: '#E5B6D4' },
+        { name: '交際費',       pct: 2,  color: '#F0C9D9' },
+        { name: '医療費',       pct: 1,  color: '#E5D9B6' },
+        { name: '保険料',       pct: 5,  color: '#C9E5D9' },
+        { name: '貯蓄',         pct: 9,  color: '#FF8FA8' },
+      ],
+    },
+    3: {
+      label: 'ひとり親＋子3人以上',
+      items: [
+        { name: '住居費',       pct: 26, color: '#FFB6C1' },
+        { name: '食費',         pct: 19, color: '#FFCBA4' },
+        { name: '水道光熱費',   pct: 9,  color: '#FFE5A5' },
+        { name: '通信費',       pct: 5,  color: '#D4E89E' },
+        { name: '小遣い',       pct: 4,  color: '#A4E5C5' },
+        { name: '教育費',       pct: 16, color: '#A4D8E5' },
+        { name: '衣服美容費',   pct: 3,  color: '#B6BFE5' },
+        { name: '日用品費',     pct: 3,  color: '#D4B6E5' },
+        { name: '趣味娯楽費',   pct: 1,  color: '#E5B6D4' },
+        { name: '交際費',       pct: 1,  color: '#F0C9D9' },
+        { name: '医療費',       pct: 1,  color: '#E5D9B6' },
+        { name: '保険料',       pct: 5,  color: '#C9E5D9' },
+        { name: '貯蓄',         pct: 7,  color: '#FF8FA8' },
+      ],
+    },
+  },
 };
 
 // 状態
@@ -127,6 +185,9 @@ function getRatioData() {
   if (currentType === 'family') {
     return RATIOS.family[currentChildren];
   }
+  if (currentType === 'singleparent') {
+    return RATIOS.singleparent[currentChildren];
+  }
   return RATIOS[currentType];
 }
 
@@ -141,8 +202,8 @@ $tabs.forEach((tab) => {
     tab.setAttribute('aria-selected', 'true');
     currentType = tab.dataset.type;
 
-    // 「夫婦＋子供」の場合のみ子供人数を表示
-    if (currentType === 'family') {
+    // 「夫婦＋子供」「ひとり親」の場合のみ子供人数を表示
+    if (currentType === 'family' || currentType === 'singleparent') {
       $childrenWrap.classList.remove('hidden');
     } else {
       $childrenWrap.classList.add('hidden');

@@ -183,6 +183,7 @@ body {
 /* タブ（世帯タイプ） */
 .household-tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   background: var(--pink-50);
   padding: 6px;
@@ -190,7 +191,8 @@ body {
 }
 
 .tab {
-  flex: 1;
+  flex: 1 1 70px;
+  min-width: 70px;
   padding: 12px 8px;
   font-family: inherit;
   font-size: 14px;
